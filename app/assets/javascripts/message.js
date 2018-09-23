@@ -11,12 +11,12 @@ $(function(){
                 </div>
                   <div class = "lower-meesage">
                     <div class = "lower-message__content">
-                      ${if message.content.present?}
+
                       <p><%=message.content></p>
                       <% end %>
                     </div>
                     <div class = "lower-message__image">
-                      ${if message.image.present?}
+
                       <img src = ${message.image} >
                     </div>
                   </div>
@@ -25,12 +25,11 @@ $(function(){
   }
   $('#new_message').on('submit', function(e){ //idが優先される
     e.preventDefault();
+    console.log(this)
     var formData = new FormData(this);
-     console.log(formData)
-    var href = window.location.href;
-    console.log(href)
+   var url = $(this).attr('action');
     $.ajax({
-      url: href,
+      url: url,
       type: "POST",
       data: formData,
       dataType: 'json',
