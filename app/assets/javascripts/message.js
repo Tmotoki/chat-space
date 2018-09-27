@@ -3,31 +3,25 @@ $(function(){
     var html = `<div class = message >
                   <div class = "upper-message">
                     <div class = "upper-message__user-name">
-                    ${message.name}
+                    ${message.user_name}
                     </div>
                     <div class = "upper-message__date">
                     ${message.created_at}
                     </div>
-                </div>
+                  </div>
                   <div class = "lower-meesage">
                     <div class = "lower-message__content">
-
-                      <p><%=message.content></p>
-                      <% end %>
-                    </div>
-                    <div class = "lower-message__image">
-
-                      <img src = ${message.image} >
+                      ${message.content}
                     </div>
                   </div>
                 </div>`
     return html
   }
-  $('#new_message').on('submit', function(e){ //idが優先される
+
+  $('#new_message').on('submit', function(e) {
     e.preventDefault();
-    console.log(this)
-    var formData = new FormData(this);
-   var url = $(this).attr('action');
+    var formData = new FormData($(this).get(0));
+    var url = $(this).attr('action');
     $.ajax({
       url: url,
       type: "POST",
@@ -37,10 +31,9 @@ $(function(){
       contentType: false
     })
     .done(function(message){
-      console.log(message)
       var html = buildHTML(message);
-      $('.messages').append(html)
-      $('.textbox').val('')
+      $('.messages').append(html);
+      $('.form__message').val('');
     })
     .fail(function(){
       alert('error')
