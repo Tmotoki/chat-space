@@ -43,7 +43,7 @@ $(function(){
       alert('入力してください')
     })
     .always(function(){
-      $(".for__submit").attr('disabled', false)
+      $(".form__submit").attr('disabled', false)
     })
   })
 })
