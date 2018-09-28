@@ -1,27 +1,29 @@
 $(function(){
   function buildHTML(message){
-    var html = `<div class = message >
-                  <div class = "upper-message">
-                    <div class = "upper-message__user-name">
-                    ${message.user_name}
-                    </div>
-                    <div class = "upper-message__date">
-                    ${message.created_at}
-                    </div>
+    var image = (message.image)? `<img src = ${message.image}>`: ""
+  var html = `<div class = "message" >
+                <div class = "upper-message">
+                  <div class = "upper-message__user-name">
+                  ${message.user_name}
                   </div>
-                  <div class = "lower-meesage">
-                    <div class = "lower-message__content">
-                      ${message.content}
-                    </div>
+                  <div class = "upper-message__date">
+                  ${message.created_at}
                   </div>
-                </div>`
-    return html
+                </div>
+                <div class = "lower-meesage">
+                  <div class = "lower-message__content">
+                    ${message.content}
+                    ${image}
+                  </div>
+                </div>
+              </div>`
+    return html;
   }
 
   $('#new_message').on('submit', function(e) {
-    e.preventDefault();
-    var formData = new FormData($(this).get(0));
-    var url = $(this).attr('action');
+    e.preventDefault()
+    var formData = new FormData($(this).get(0))
+    var url = $(this).attr('action')
     $.ajax({
       url: url,
       type: "POST",
@@ -30,13 +32,17 @@ $(function(){
       processData: false,
       contentType: false
     })
-    .done(function(message){
-      var html = buildHTML(message);
-      $('.messages').append(html);
-      $('.form__message').val('');
+    .done(function(data){
+      var html = buildHTML(data)
+      $('.messages').append(html)
+      $('.messages').animate({
+      scrollTop: $('.messages')[0].scrollHeight}, 'fast')
+      $("#new_message")[0].reset()
+      $(".for__submit").attr('disabled', false)
     })
     .fail(function(){
-      alert('error')
+      alert('入力してください')
+      $(".for__submit").attr('disabled', false)
     })
   })
 })
