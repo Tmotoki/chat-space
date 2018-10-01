@@ -29,4 +29,26 @@ $(function(){
       alert('ユーザー検索に失敗しました')
     })
   })
+
+  var result_list = $("#chat-group-users")
+
+  function addUser(name, id){
+    var html = `<div class='chat-group-user clearfix js-chat-member' id='chat-group-user-8'>
+                  <input name='group[user_ids][]' type='hidden' value='${id}'>
+                  <p class='chat-group-user__name'>${name}</p>
+                  <a class='user-search-remove chat-group-user__btn chat-group-user__btn--remove js-remove-btn'>削除</a>
+                  </div>`
+    result_list.append(html)
+  }
+
+  $("#user-search-results").on("click",".chat-group-user__btn--add", function(){
+    console.log(this)
+    var name = $(this).data("user-name")
+    var id   = $(this).data("user-id")
+    addUser(name, id)
+    $(this).parent().remove();
+  })
+  $(".chat-group-form").on("click", ".chat-group-user__btn--remove", function() {
+    $(this).parent().remove();
+  })
 })
