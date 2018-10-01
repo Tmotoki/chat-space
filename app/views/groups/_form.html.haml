@@ -16,6 +16,7 @@
     .chat-group-form__field--right
       .chat-group-form__search.clearfix
         = f.text_field :name, class: "chat-group-form__input", type: "text", placeholder: "追加したいユーザー名を入力してください", id: "user-search-field", data: {id: "id"}
+      #user-search-results
   .chat-group-form__field.clearfix
     .chat-group-form__field--left
       = f.label :name, "チャットメンバー", class: "chat-group-form__label", id: "user-search-field-box"
