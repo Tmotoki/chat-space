@@ -12,7 +12,6 @@ $(function(){
 
   $("#user-search-field").on("keyup",function(){
     var input = $("#user-search-field").val()
-    console.log(input)
     $.ajax({
       type: 'GET',
       url: '/users',
@@ -42,7 +41,6 @@ $(function(){
   }
 
   $("#user-search-results").on("click",".chat-group-user__btn--add", function(){
-    console.log(this)
     var name = $(this).data("user-name")
     var id   = $(this).data("user-id")
     addUser(name, id)
