@@ -1,7 +1,7 @@
 $(function(){
   function buildHTML(message){
     var image = (message.image)? `<img src = ${message.image}>`: ""
-  var html = `<div class = "message" >
+  var html = `<div class = "message" data-message-id= "${message.id}" >
                 <div class = "upper-message">
                   <div class = "upper-message__user-name">
                   ${message.user_name}
@@ -17,8 +17,35 @@ $(function(){
                   </div>
                 </div>
               </div>`
-    return html;
+    return html
   }
+
+  $(function(){
+    setInterval(update, 5000)
+   })
+
+  function update(){
+    var message_id = $(".message").last().data("message-id")
+    console.log(message_id)
+    $.ajax({
+      url: location.href,
+      type: 'GET',
+      data: {
+        id: message_id },
+      dataType: 'json'
+    })
+
+    .done(function(data){
+      data.forEach(function(a){
+      var html = buildHTML(a)
+      $('.messages').append(html)
+      $('.form_message').val('')
+      $('#message_image').val('')
+      $(".form__submit").attr('disabled', false);
+      $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast')
+      })
+    })
+    }
 
   $('#new_message').on('submit', function(e) {
     e.preventDefault()
