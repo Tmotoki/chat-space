@@ -26,7 +26,6 @@ $(function(){
 
   function update(){
     var message_id = $(".message").last().data("message-id")
-    console.log(message_id)
     $.ajax({
       url: location.href,
       type: 'GET',
@@ -35,14 +34,11 @@ $(function(){
       dataType: 'json'
     })
 
-    .done(function(data){
-      data.forEach(function(a){
-      var html = buildHTML(a)
+    .done(function(new_messages){
+      new_messages.forEach(function(new_message){
+      var html = buildHTML(new_message)
       $('.messages').append(html)
       $('.form_message').val('')
-      $('#message_image').val('')
-      $(".form__submit").attr('disabled', false);
-      $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast')
       })
     })
     }
